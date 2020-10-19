@@ -14,8 +14,8 @@ from azureml.data.dataset_factory import TabularDatasetFactory
 # "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv"
 web_path ='https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv'
 dataset = Dataset.Tabular.from_delimited_files(path=web_path)
-ds = dataset.to_pandas_dataframe()
-x, y = clean_data(ds)
+df = dataset.to_pandas_dataframe()
+x, y = clean_data(df)
 
 # TODO: Split data into train and test sets.
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.33, random_state= 42)
