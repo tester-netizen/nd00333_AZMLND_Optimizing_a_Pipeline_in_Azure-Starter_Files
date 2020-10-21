@@ -8,21 +8,18 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 import pandas as pd
 from azureml.core.run import Run
+from azureml.core import Dataset
 from azureml.data.dataset_factory import TabularDatasetFactory
-
-# TODO: Create TabularDataset using TabularDatasetFactory
+from train import clean_data
 # "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv"
 web_path ='https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv'
-dataset = Dataset.Tabular.from_delimited_files(path=web_path)
+dataset = Dataset.Tabular.from_delimited_files(path= web_path)
 df = dataset.to_pandas_dataframe()
 x, y = clean_data(df)
-
-# TODO: Split data into train and test sets.
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.33, random_state= 42)
-
 run = Run.get_context()
 
-def clean_data(data):
+def clean_data(df):
     # Dict for cleaning data
     months = {"jan":1, "feb":2, "mar":3, "apr":4, "may":5, "jun":6, "jul":7, "aug":8, "sep":9, "oct":10, "nov":11, "dec":12}
     weekdays = {"mon":1, "tue":2, "wed":3, "thu":4, "fri":5, "sat":6, "sun":7}
