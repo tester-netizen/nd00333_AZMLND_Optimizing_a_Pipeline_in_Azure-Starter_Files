@@ -13,11 +13,12 @@ from azureml.data.dataset_factory import TabularDatasetFactory
 from train import clean_data
 # "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv"
 web_path ='https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv'
-dataset = Dataset.Tabular.from_delimited_files(path= web_path)
-df = dataset.to_pandas_dataframe()
-x, y = clean_data(df)
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.33, random_state= 42)
-run = Run.get_context()
+ds = TabularDatasetFactory.from_delimited_files(path= web_path)
+
+x, y = clean_data(ds)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.33)
+training_data= pd.concat([x_train, y_train], axis=1)
+training_data.head()
 
 def clean_data(df):
     # Dict for cleaning data
